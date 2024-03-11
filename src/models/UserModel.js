@@ -8,7 +8,8 @@ const userSchema = new mongoose.Schema(
         isAdmin: { type: Boolean, default: false, require: true },
         phone: { type: Number },
         address: { type: String },
-        avatar: { type: String }
+        avatar: { type: String },
+        createOrderdAt: { type: String }
     },
     {
         timestamps: true // Thời gian tạo và update

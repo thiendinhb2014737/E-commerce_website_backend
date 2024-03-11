@@ -30,7 +30,9 @@ const orderSchema = new mongoose.Schema({
     isPaid: { type: Boolean, default: false },
     paidAt: { type: Date },
     isDelivered: { type: Boolean, default: false },
+    statusOder: { type: String, default: 'Chưa xác nhận' },
     deliveredAt: { type: Date },
+    createOrderdAt: { type: String }
 },
     {
         timestamps: true // Thời gian tạo và update

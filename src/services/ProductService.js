@@ -3,7 +3,7 @@ const Product = require("../models/ProductModel")
 
 const createProduct = (newProduct) => {
     return new Promise(async (resolve, reject) => {
-        const { name, image, type, price, size, countInStock, rating, description, discount } = newProduct
+        const { name, image, type, price, sizeS, sizeM, sizeL, sizeXL, countS, countM, countL, countXL, countInStock, rating, description, discount } = newProduct
 
         try {
             // Check email
@@ -23,7 +23,14 @@ const createProduct = (newProduct) => {
                 image,
                 type,
                 price,
-                size,
+                sizeS,
+                countS: Number(countS),
+                sizeM,
+                countM: Number(countM),
+                sizeL,
+                countL: Number(countL),
+                sizeXL,
+                countXL: Number(countXL),
                 countInStock: Number(countInStock),
                 rating,
                 description,
@@ -114,21 +121,50 @@ const deleteManyProduct = (ids) => {
 }
 
 const getAllProduct = (limit, page, sort, filter) => {
+    console.log('filter', filter)
     return new Promise(async (resolve, reject) => {
         try {
             const totalProduct = await Product.countDocuments()
             let allProduct = []
+
             if (filter) {
-                const label = filter[0]
-                const allObjectFilter = await Product.find({ [label]: { '$regex': filter[1] } }).limit(limit).skip(page * limit)
-                resolve({
-                    status: 'OK',
-                    message: 'Success',
-                    data: allObjectFilter,
-                    total: totalProduct,
-                    pageCurrent: Number(page + 1),
-                    totalPage: Math.ceil(totalProduct / limit)
-                })
+                if (filter[0] === 'type' || filter[0] === 'name') {
+                    const label = filter[0]
+                    const allObjectFilter = await Product.find({ [label]: { '$regex': filter[1] } }).limit(limit).skip(page * limit)
+                    resolve({
+                        status: 'OK',
+                        message: 'Success',
+                        data: allObjectFilter,
+                        total: totalProduct,
+                        pageCurrent: Number(page + 1),
+                        totalPage: Math.ceil(totalProduct / limit)
+                    })
+                } else if (filter[0] === 'price') {
+                    if (Number(filter[1]) === Number(200000)) {
+                        const label = filter[0]
+                        //console.log('label', label)
+                        const allObjectFilter = await Product.find({ [label]: { '$lte': Number(filter[1]) } }).limit(limit).skip(page * limit)
+                        resolve({
+                            status: 'OK',
+                            message: 'Success',
+                            data: allObjectFilter,
+                            total: totalProduct,
+                            pageCurrent: Number(page + 1),
+                            totalPage: Math.ceil(totalProduct / limit)
+                        })
+                    } else if (Number(filter[1]) === Number(200001)) {
+                        const label = filter[0]
+                        const allObjectFilter = await Product.find({ [label]: { '$gte': Number(filter[1]) } }).limit(limit).skip(page * limit)
+                        resolve({
+                            status: 'OK',
+                            message: 'Success',
+                            data: allObjectFilter,
+                            total: totalProduct,
+                            pageCurrent: Number(page + 1),
+                            totalPage: Math.ceil(totalProduct / limit)
+                        })
+                    }
+                }
             }
             if (sort) {
                 const objectSort = {}
@@ -208,6 +244,22 @@ const getAllType = () => {
         }
     })
 }
+const getAllPrice = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // skip() bỏ bao nhiêu sản phẩm để lấy sp tiếp
+            const allType = await Product.distinct('price')
+
+            resolve({
+                status: 'OK',
+                message: 'Success',
+                data: allType,
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 
 module.exports = {
     createProduct,
@@ -216,5 +268,6 @@ module.exports = {
     getDetailsProduct,
     getAllProduct,
     deleteManyProduct,
-    getAllType
+    getAllType,
+    getAllPrice
 }

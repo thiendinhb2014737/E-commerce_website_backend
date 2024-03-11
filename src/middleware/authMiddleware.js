@@ -38,7 +38,10 @@ const authUserMiddleWare = (req, res, next) => {
         }
         // console.log('user', user)
         // kiểm tra xem user có quyền admin không, nếu phải cho đi tiếp next()
-        if (user?.isAdmin || user?.id === userId) {
+
+
+        // thay user?.id === userId thành user?.id
+        if (user?.isAdmin || user?.id) {
             next()
         } else {
             return res.status(404).json({

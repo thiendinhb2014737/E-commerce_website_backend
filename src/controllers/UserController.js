@@ -131,8 +131,18 @@ const deleteMany = async (req, res) => {
 
 const getAllUser = async (req, res) => {
     try {
-
-        const response = await UserService.getAllUser()
+        const { sort, filter } = req.query
+        const response = await UserService.getAllUser(sort, filter)
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const getAllUserCount = async (req, res) => {
+    try {
+        const response = await UserService.getAllUserCount()
         return res.status(200).json(response)
     } catch (e) {
         return res.status(404).json({
@@ -165,7 +175,6 @@ const refreshToken = async (req, res) => {
     //console.log('req.cookies.refresh_token', req.cookies.refresh_token)
     try {
         const token = req.cookies.refresh_token
-
         if (!token) {
             return res.status(200).json({
                 status: 'ERR',
@@ -205,5 +214,6 @@ module.exports = {
     getDetailsUser,
     refreshToken,
     logoutUser,
-    deleteMany
+    deleteMany,
+    getAllUserCount
 }

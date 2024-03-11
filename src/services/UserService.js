@@ -5,7 +5,7 @@ const { JsonWebTokenError } = require("jsonwebtoken")
 
 const createUser = (newUser) => {
     return new Promise(async (resolve, reject) => {
-        const { name, email, password, confirmPassword, phone } = newUser
+        const { name, email, password, confirmPassword, phone, createOrderdAt } = newUser
 
         try {
             // Check email
@@ -27,7 +27,8 @@ const createUser = (newUser) => {
                 name,
                 email,
                 password: hash,
-                phone
+                phone,
+                createOrderdAt
             })
             if (createdUser) {
                 resolve({
@@ -172,20 +173,58 @@ const deleteManyUser = (ids) => {
     })
 }
 
-const getAllUser = () => {
+const getAllUser = (sort, filter) => {
+    //console.log('filter', filter)
     return new Promise(async (resolve, reject) => {
-
         try {
+            if (filter) {
+                const label = filter[0]
+                const allUser = await User.find({ [label]: { '$regex': filter[1] } }).countDocuments()
+                resolve({
+                    status: 'OK',
+                    message: 'Success',
+                    data: allUser,
+                })
+            }
+            if (sort) {
+                const objectSort = {}
+                objectSort[sort[1]] = sort[0]
+                const allUser = await User.find().sort(objectSort)
+                resolve({
+                    status: 'OK',
+                    message: 'Get all user seccess!',
+                    data: allUser,
+                })
+            }
+            else {
+                const allUser = await User.find()
 
-            const allUser = await User.find()
+                //trả về kết quả
+                resolve({
+                    status: 'OK',
+                    message: 'Get all user seccess!',
+                    data: allUser
+                })
 
+            }
+
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+const getAllUserCount = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            const allUserCount = await User.countDocuments()
+            console.log('allUserCount', allUserCount)
             //trả về kết quả
             resolve({
                 status: 'OK',
                 message: 'Get all user seccess!',
-                data: allUser
+                data: allUserCount
             })
-
 
         } catch (e) {
             reject(e)
@@ -231,5 +270,6 @@ module.exports = {
     deleteUser,
     getAllUser,
     getDetailsUser,
-    deleteManyUser
+    deleteManyUser,
+    getAllUserCount
 }

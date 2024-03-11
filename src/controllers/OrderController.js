@@ -29,7 +29,8 @@ const getAllOrderDetails = async (req, res) => {
                 message: 'The userId is required'
             })
         }
-        const response = await OrderService.getAllOrderDetails(userId)
+        const { sort, limit } = req.query
+        const response = await OrderService.getAllOrderDetails(userId, sort, Number(limit))
         return res.status(200).json(response)
     } catch (e) {
         // console.log(e)
@@ -77,12 +78,95 @@ const cancelOrderDetails = async (req, res) => {
     }
 }
 
+// 2/12/2024 Thêm filter
 const getAllOrder = async (req, res) => {
     try {
-        const data = await OrderService.getAllOrder()
+        const { sort, filter } = req.query
+        const data = await OrderService.getAllOrder(sort, filter)
+        return res.status(200).json(data)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const getOrderMonth = async (req, res) => {
+    try {
+        const { filter } = req.query
+        const data = await OrderService.getOrderMonth(filter)
+        return res.status(200).json(data)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const countOrderMonth = async (req, res) => {
+    try {
+        const { filter } = req.query
+        const data = await OrderService.countOrderMonth(filter)
+        return res.status(200).json(data)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const countAllOrder = async (req, res) => {
+    try {
+        const data = await OrderService.countAllOrder()
         return res.status(200).json(data)
     } catch (e) {
         // console.log(e)
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const getFilterOrder = async (req, res) => {
+    try {
+        const { filter } = req.query
+        const data = await OrderService.getFilterOrder(filter)
+        return res.status(200).json(data)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const updateOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id
+        const data = req.body
+        if (!orderId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The productId is required'
+            })
+        }
+
+        const response = await OrderService.updateOrder(orderId, data)
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const deleteOrder = async (req, res) => {
+    try {
+        const orderId = req.params.id
+        const data = req.body.orderItems
+        if (!orderId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The productId is required'
+            })
+        }
+
+        const response = await OrderService.deleteOrder(orderId, data)
+        return res.status(200).json(response)
+    } catch (e) {
         return res.status(404).json({
             message: e
         })
@@ -94,5 +178,11 @@ module.exports = {
     getAllOrderDetails,
     getDetailsOrder,
     cancelOrderDetails,
-    getAllOrder
+    getAllOrder,
+    updateOrder,
+    deleteOrder,
+    countAllOrder,
+    getFilterOrder,
+    getOrderMonth,
+    countOrderMonth
 }
