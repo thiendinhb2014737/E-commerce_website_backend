@@ -205,6 +205,44 @@ const logoutUser = async (req, res) => {
         })
     }
 }
+const getEmailUser = async (req, res) => {
+
+    try {
+        const { email } = req.body
+        const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+        const isCheckEmail = reg.test(email)
+        if (!email) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The input is required'
+            })
+        } else if (!isCheckEmail) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The input is email'
+            })
+        }
+
+        const response = await UserService.getEmailUser(req.body)
+
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+const changePassword = async (req, res) => {
+    const data = req.body
+    try {
+        const response = await UserService.changePassword(data)
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
 module.exports = {
     createUser,
     loginUser,
@@ -215,5 +253,7 @@ module.exports = {
     refreshToken,
     logoutUser,
     deleteMany,
-    getAllUserCount
+    getAllUserCount,
+    getEmailUser,
+    changePassword
 }

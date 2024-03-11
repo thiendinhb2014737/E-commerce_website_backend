@@ -260,7 +260,59 @@ const getDetailsUser = (id) => {
         }
     })
 }
+const getEmailUser = (getEmail) => {
+    return new Promise(async (resolve, reject) => {
+        const { email } = getEmail
 
+        try {
+            // Check email có tồn tại trong database không
+            const checkUser = await User.findOne({
+                email: email
+            })
+            if (checkUser === null) {
+                resolve({
+                    status: 'ERR',
+                    message: 'The user is not defined!',
+                })
+            }
+
+            resolve({
+                status: 'OK',
+                message: 'SUCCESS!',
+                data: checkUser
+            })
+
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+const changePassword = (data) => {
+    const { email, password, confirmPassword } = data
+    const hash = bcrypt.hashSync(password, 10)
+    console.log(hash)
+    console.log(password, email)
+    return new Promise(async (resolve, reject) => {
+
+        try {
+            const user = await User.findOne({ email: email });
+
+            const updatedUser = await User.findByIdAndUpdate(user._id, { password: hash }, { new: true })
+
+            resolve({
+                status: 'OK',
+                message: 'SUCCESS!',
+                data: updatedUser
+            })
+
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 
 
 module.exports = {
@@ -271,5 +323,7 @@ module.exports = {
     getAllUser,
     getDetailsUser,
     deleteManyUser,
-    getAllUserCount
+    getAllUserCount,
+    getEmailUser,
+    changePassword
 }
