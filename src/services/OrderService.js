@@ -9,125 +9,522 @@ const createOrder = (newOrder) => {
             // console.log('orderItems', orderItems)
             const promises = orderItems.map(async (order) => {
                 const size = order.size
+                const color = order.color
                 if (size === 'S') {
-                    const productData = await Product.findOneAndUpdate(
-                        {
-                            _id: order.product,
-                            countInStock: { $gte: order.amount },
-                            countS: { $gte: order.amount },
-
-                        },
-                        {
-                            $inc: {
-                                countInStock: -order.amount,
-                                selled: +order.amount,
-                                countS: -order.amount
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countS: { $gte: order.amount },
+                                countColorBeS: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countS: -order.amount,
+                                    countColorBeS: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
                             }
-                        },
-                        { new: true }
-                    )
-                    if (productData) {
-                        return {
-                            status: 'OK',
-                            message: 'SUCCESS'
                         }
-                    }
-                    else {
-                        return {
-                            status: 'OK',
-                            message: 'ERR',
-                            id: order.product
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
                         }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countS: { $gte: order.amount },
+                                countColorWhiteS: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countS: -order.amount,
+                                    countColorWhiteS: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countS: { $gte: order.amount },
+                                countColorBlackS: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countS: -order.amount,
+                                    countColorBlackS: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countS: { $gte: order.amount },
+                                countColorBlueS: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countS: -order.amount,
+                                    countColorBlueS: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
                     }
                 } else if (size === 'M') {
-                    const productData = await Product.findOneAndUpdate(
-                        {
-                            _id: order.product,
-                            countInStock: { $gte: order.amount },
-                            countM: { $gte: order.amount },
-
-                        },
-                        {
-                            $inc: {
-                                countInStock: -order.amount,
-                                selled: +order.amount,
-                                countM: -order.amount
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countM: { $gte: order.amount },
+                                countColorBeM: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countM: -order.amount,
+                                    countColorBeM: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
                             }
-                        },
-                        { new: true }
-                    )
-                    if (productData) {
-                        return {
-                            status: 'OK',
-                            message: 'SUCCESS'
                         }
-                    }
-                    else {
-                        return {
-                            status: 'OK',
-                            message: 'ERR',
-                            id: order.product
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
                         }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countM: { $gte: order.amount },
+                                countColorWhiteM: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countM: -order.amount,
+                                    countColorWhiteM: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countM: { $gte: order.amount },
+                                countColorBlackM: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countM: -order.amount,
+                                    countColorBlackM: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countM: { $gte: order.amount },
+                                countColorBlueM: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countM: -order.amount,
+                                    countColorBlueM: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
                     }
                 } else if (size === 'L') {
-                    const productData = await Product.findOneAndUpdate(
-                        {
-                            _id: order.product,
-                            countInStock: { $gte: order.amount },
-                            countL: { $gte: order.amount },
-
-                        },
-                        {
-                            $inc: {
-                                countInStock: -order.amount,
-                                selled: +order.amount,
-                                countL: -order.amount
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countL: { $gte: order.amount },
+                                countColorBeL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countL: -order.amount,
+                                    countColorBeL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
                             }
-                        },
-                        { new: true }
-                    )
-                    if (productData) {
-                        return {
-                            status: 'OK',
-                            message: 'SUCCESS'
                         }
-                    }
-                    else {
-                        return {
-                            status: 'OK',
-                            message: 'ERR',
-                            id: order.product
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
                         }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countL: { $gte: order.amount },
+                                countColorWhiteL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countL: -order.amount,
+                                    countColorWhiteL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countL: { $gte: order.amount },
+                                countColorBlackL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countL: -order.amount,
+                                    countColorBlackL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countL: { $gte: order.amount },
+                                countColorBlueL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countL: -order.amount,
+                                    countColorBlueL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
                     }
                 } else if (size === 'XL') {
-                    const productData = await Product.findOneAndUpdate(
-                        {
-                            _id: order.product,
-                            countInStock: { $gte: order.amount },
-                            countXL: { $gte: order.amount },
-
-                        },
-                        {
-                            $inc: {
-                                countInStock: -order.amount,
-                                selled: +order.amount,
-                                countXL: -order.amount
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countXL: { $gte: order.amount },
+                                countColorBeXL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countXL: -order.amount,
+                                    countColorBeXL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
                             }
-                        },
-                        { new: true }
-                    )
-                    if (productData) {
-                        return {
-                            status: 'OK',
-                            message: 'SUCCESS'
                         }
-                    }
-                    else {
-                        return {
-                            status: 'OK',
-                            message: 'ERR',
-                            id: order.product
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
                         }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countXL: { $gte: order.amount },
+                                countColorWhiteXL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countXL: -order.amount,
+                                    countColorWhiteXL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countXL: { $gte: order.amount },
+                                countColorBlackXL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countXL: -order.amount,
+                                    countColorBlackXL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                countInStock: { $gte: order.amount },
+                                countXL: { $gte: order.amount },
+                                countColorBlueXL: { $gte: order.amount }
+                            },
+                            {
+                                $inc: {
+                                    countInStock: -order.amount,
+                                    selled: +order.amount,
+                                    countXL: -order.amount,
+                                    countColorBlueXL: -order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            return {
+                                status: 'OK',
+                                message: 'SUCCESS'
+                            }
+                        }
+                        else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
                     }
 
                 }
@@ -264,39 +661,536 @@ const getDetailsOrder = (id) => {
 }
 
 
+
+
 const cancelOrderDetails = (id, data) => {
+
     return new Promise(async (resolve, reject) => {
         try {
             let order = []
             const promises = data.map(async (order) => {
-                const productData = await Product.findOneAndUpdate(
-                    {
-                        _id: order.product,
-                        selled: { $gte: order.amount }
-                    },
-                    {
-                        $inc: {
-                            countInStock: +order.amount,
-                            selled: -order.amount
+                const size = order.size
+                const color = order.color
+                if (size === 'S') {
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countS: +order.amount,
+                                    countColorBeS: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
                         }
-                    },
-                    { new: true }
-                )
-                if (productData) {
-                    order = await Order.findByIdAndDelete(id)
-                    if (order === null) {
-                        resolve({
-                            status: 'ERR',
-                            message: 'The order is not defined'
-                        })
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countS: +order.amount,
+                                    countColorWhiteS: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countS: +order.amount,
+                                    countColorBlackS: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countS: +order.amount,
+                                    countColorBlueS: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
                     }
-                } else {
-                    return {
-                        status: 'OK',
-                        message: 'ERR',
-                        id: order.product
+                } else if (size === 'M') {
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countM: +order.amount,
+                                    countColorBeM: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countM: +order.amount,
+                                    countColorWhiteM: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countM: +order.amount,
+                                    countColorBlackM: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countM: +order.amount,
+                                    countColorBlueM: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    }
+                } else if (size === 'L') {
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countL: +order.amount,
+                                    countColorBeL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countL: +order.amount,
+                                    countColorWhiteL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countL: +order.amount,
+                                    countColorBlackL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countL: +order.amount,
+                                    countColorBlueL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    }
+                } else if (size === 'XL') {
+                    if (color === '#efefef') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countXL: +order.amount,
+                                    countColorBeXL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+                    } else if (color === 'white') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countXL: +order.amount,
+                                    countColorWhiteXL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'black') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countXL: +order.amount,
+                                    countColorBlackXL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
+                    } else if (color === 'blue') {
+                        const productData = await Product.findOneAndUpdate(
+                            {
+                                _id: order.product,
+                                selled: { $gte: order.amount },
+                            },
+                            {
+                                $inc: {
+                                    countInStock: +order.amount,
+                                    selled: -order.amount,
+                                    countXL: +order.amount,
+                                    countColorBlueXL: +order.amount
+                                }
+                            },
+                            { new: true }
+                        )
+                        if (productData) {
+                            order = await Order.findByIdAndDelete(id)
+                            if (order === null) {
+                                resolve({
+                                    status: 'ERR',
+                                    message: 'The order is not defined'
+                                })
+                            }
+                        } else {
+                            return {
+                                status: 'OK',
+                                message: 'ERR',
+                                id: order.product
+                            }
+                        }
+
                     }
                 }
+
             })
             const results = await Promise.all(promises)
             const newData = results && results[0] && results[0].id

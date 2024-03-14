@@ -3,10 +3,20 @@ const Product = require("../models/ProductModel")
 
 const createProduct = (newProduct) => {
     return new Promise(async (resolve, reject) => {
-        const { name, image, type, price, sizeS, sizeM, sizeL, sizeXL, countS, countM, countL, countXL, countInStock, rating, description, discount } = newProduct
+        const {
+            name, image, type, price,
+            sizeS, sizeM, sizeL, sizeXL, countS, countM, countL, countXL,
+            colorBe, colorWhite, colorBlack, colorBlue,
+            countColorBeS, countColorWhiteS, countColorBlackS, countColorBlueS,
+            countColorBeM, countColorWhiteM, countColorBlackM, countColorBlueM,
+            countColorBeL, countColorWhiteL, countColorBlackL, countColorBlueL,
+            countColorBeXL, countColorWhiteXL, countColorBlackXL, countColorBlueXL,
+            gender,
+            countInStock, rating, description, discount
+        } = newProduct
 
         try {
-            // Check email
+
             const checkProduct = await Product.findOne({
                 name: name
             })
@@ -17,12 +27,13 @@ const createProduct = (newProduct) => {
                 })
             }
 
-            //Khi test phone: 0123456789 bị lỗi??
+
             const newProduct = await Product.create({
                 name,
                 image,
                 type,
                 price,
+
                 sizeS,
                 countS: Number(countS),
                 sizeM,
@@ -31,6 +42,30 @@ const createProduct = (newProduct) => {
                 countL: Number(countL),
                 sizeXL,
                 countXL: Number(countXL),
+
+                colorBe,
+                colorWhite,
+                colorBlack,
+                colorBlue,
+                countColorBeS: Number(countColorBeS),
+                countColorWhiteS: Number(countColorWhiteS),
+                countColorBlackS: Number(countColorBlackS),
+                countColorBlueS: Number(countColorBlueS),
+                countColorBeM: Number(countColorBeM),
+                countColorWhiteM: Number(countColorWhiteM),
+                countColorBlackM: Number(countColorBlackM),
+                countColorBlueM: Number(countColorBlueM),
+                countColorBeL: Number(countColorBeL),
+                countColorWhiteL: Number(countColorWhiteL),
+                countColorBlackL: Number(countColorBlackL),
+                countColorBlueL: Number(countColorBlueL),
+                countColorBeXL: Number(countColorBeXL),
+                countColorWhiteXL: Number(countColorWhiteXL),
+                countColorBlackXL: Number(countColorBlackXL),
+                countColorBlueXL: Number(countColorBlueXL),
+
+                gender,
+
                 countInStock: Number(countInStock),
                 rating,
                 description,
@@ -121,14 +156,14 @@ const deleteManyProduct = (ids) => {
 }
 
 const getAllProduct = (limit, page, sort, filter) => {
-    console.log('filter', filter)
+
     return new Promise(async (resolve, reject) => {
         try {
             const totalProduct = await Product.countDocuments()
             let allProduct = []
 
             if (filter) {
-                if (filter[0] === 'type' || filter[0] === 'name') {
+                if (filter[0] === 'type' || filter[0] === 'name' || filter[0] === 'gender') {
                     const label = filter[0]
                     const allObjectFilter = await Product.find({ [label]: { '$regex': filter[1] } }).limit(limit).skip(page * limit)
                     resolve({

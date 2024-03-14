@@ -3,9 +3,28 @@ const ProductService = require('../services/ProductService')
 
 const createProduct = async (req, res) => {
     try {
-        const { name, image, type, price, sizeS, sizeM, sizeL, sizeXL, countS, countM, countL, countXL, countInStock, rating, description, discount } = req.body
+        const {
+            name, image, type, price,
+            sizeS, sizeM, sizeL, sizeXL, countS, countM, countL, countXL,
+            colorBe, colorWhite, colorBlack, colorBlue,
+            countColorBeS, countColorWhiteS, countColorBlackS, countColorBlueS,
+            countColorBeM, countColorWhiteM, countColorBlackM, countColorBlueM,
+            countColorBeL, countColorWhiteL, countColorBlackL, countColorBlueL,
+            countColorBeXL, countColorWhiteXL, countColorBlackXL, countColorBlueXL,
+            gender,
+            countInStock, rating, description, discount
+        } = req.body
 
-        if (!name || !image || !type || !price || !sizeS || !sizeM || !sizeL || !sizeXL || !countS || !countM || !countL || !countXL || !countInStock || !rating || !discount) {
+        if (
+            !name || !image || !type || !price
+            || !sizeS || !sizeM || !sizeL || !sizeXL || !countS || !countM || !countL || !countXL
+            || !colorBe || !colorWhite || !colorBlack || !colorBlue
+            || !countColorBeS || !countColorWhiteS || !countColorBlackS || !countColorBlueS
+            || !countColorBeM || !countColorWhiteM || !countColorBlackM || !countColorBlueM
+            || !countColorBeL || !countColorWhiteL || !countColorBlackL || !countColorBlueL
+            || !countColorBeXL || !countColorWhiteXL || !countColorBlackXL || !countColorBlueXL
+            || !gender
+            || !countInStock || !rating || !discount) {
             return res.status(200).json({
                 status: 'ERR',
                 message: 'The input is required'
@@ -22,6 +41,7 @@ const createProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
+    console.log('req.body', req.body)
     try {
 
         const productId = req.params.id
