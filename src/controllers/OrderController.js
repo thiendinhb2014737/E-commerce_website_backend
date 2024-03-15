@@ -29,8 +29,8 @@ const getAllOrderDetails = async (req, res) => {
                 message: 'The userId is required'
             })
         }
-        const { sort, limit } = req.query
-        const response = await OrderService.getAllOrderDetails(userId, sort, Number(limit))
+        const { sort, limit, filter } = req.query
+        const response = await OrderService.getAllOrderDetails(userId, sort, Number(limit), filter)
         return res.status(200).json(response)
     } catch (e) {
         // console.log(e)

@@ -4,7 +4,7 @@ const EmailService = require("../services/EmailService")
 
 const createOrder = (newOrder) => {
     return new Promise(async (resolve, reject) => {
-        const { orderItems, paymentMethod, itemsPrice, shippingPrice, totalPrice, fullName, address, phone, user, isPaid, paidAt, email, createOrderdAt, statusOder } = newOrder
+        const { orderItems, paymentMethod, itemsPrice, shippingPrice, totalPrice, fullName, address, phone, user, isPaid, paidAt, email, createOrderdAt, statusOder, maDH } = newOrder
         try {
             // console.log('orderItems', orderItems)
             const promises = orderItems.map(async (order) => {
@@ -560,7 +560,8 @@ const createOrder = (newOrder) => {
                     isPaid,
                     paidAt,
                     createOrderdAt,
-                    statusOder
+                    statusOder,
+                    maDH
                 })
 
                 if (createdOrder) {
@@ -593,10 +594,18 @@ const createOrder = (newOrder) => {
 // }
 
 
-const getAllOrderDetails = (id, sort, limit) => {
-
+const getAllOrderDetails = (id, sort, limit, filter) => {
     return new Promise(async (resolve, reject) => {
         try {
+            if (filter) {
+                const label = filter[0];
+                const order = await Order.find({ [label]: { '$regex': filter[1] } }).limit(limit)
+                resolve({
+                    status: 'OK',
+                    message: 'SUCESSS',
+                    data: order
+                })
+            }
             if (sort) {
                 const objectSort = {}
                 objectSort[sort[1]] = sort[0]
