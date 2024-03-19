@@ -670,8 +670,6 @@ const getDetailsOrder = (id) => {
 }
 
 
-
-
 const cancelOrderDetails = (id, data) => {
 
     return new Promise(async (resolve, reject) => {
@@ -1222,7 +1220,7 @@ const cancelOrderDetails = (id, data) => {
 }
 // 2/12/2024 Thêm filter
 const getAllOrder = (sort, filter) => {
-    console.log('filter', filter)
+    //console.log('filter', filter)
     return new Promise(async (resolve, reject) => {
         try {
             if (filter) {
@@ -1314,7 +1312,7 @@ const countAllOrder = () => {
     })
 }
 const getFilterOrder = (filter) => {
-    console.log('filter', filter)
+    //console.log('filter', filter)
     return new Promise(async (resolve, reject) => {
         try {
             //let allProduct = []

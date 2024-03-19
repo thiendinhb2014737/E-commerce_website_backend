@@ -142,7 +142,8 @@ const getAllUser = async (req, res) => {
 }
 const getAllUserCount = async (req, res) => {
     try {
-        const response = await UserService.getAllUserCount()
+        const { filter } = req.query
+        const response = await UserService.getAllUserCount(filter)
         return res.status(200).json(response)
     } catch (e) {
         return res.status(404).json({

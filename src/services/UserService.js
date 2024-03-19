@@ -5,7 +5,7 @@ const { JsonWebTokenError } = require("jsonwebtoken")
 
 const createUser = (newUser) => {
     return new Promise(async (resolve, reject) => {
-        const { name, email, password, confirmPassword, phone, createOrderdAt } = newUser
+        const { name, email, password, confirmPassword, phone, createUserdAt } = newUser
 
         try {
             // Check email
@@ -28,7 +28,7 @@ const createUser = (newUser) => {
                 email,
                 password: hash,
                 phone,
-                createOrderdAt
+                createUserdAt
             })
             if (createdUser) {
                 resolve({
@@ -198,7 +198,7 @@ const getAllUser = (sort, filter) => {
             }
             else {
                 const allUser = await User.find()
-
+                //console.log(allUser)
                 //trả về kết quả
                 resolve({
                     status: 'OK',
@@ -214,17 +214,30 @@ const getAllUser = (sort, filter) => {
         }
     })
 }
-const getAllUserCount = () => {
+const getAllUserCount = (filter) => {
+    // console.log('filter', filter)
     return new Promise(async (resolve, reject) => {
         try {
-            const allUserCount = await User.countDocuments()
-            console.log('allUserCount', allUserCount)
-            //trả về kết quả
-            resolve({
-                status: 'OK',
-                message: 'Get all user seccess!',
-                data: allUserCount
-            })
+            if (filter) {
+                const label = filter[0]
+                const allUser = await User.find({ [label]: { '$regex': filter[1] } }).countDocuments()
+                // console.log('allUserCount2024', allUser)
+                resolve({
+                    status: 'OK',
+                    message: 'Success',
+                    data: allUser,
+                })
+            } else {
+                const allUserCount = await User.countDocuments()
+                //console.log('allUserCount', allUserCount)
+                //trả về kết quả
+                resolve({
+                    status: 'OK',
+                    message: 'Get all user seccess!',
+                    data: allUserCount
+                })
+
+            }
 
         } catch (e) {
             reject(e)
