@@ -14,4 +14,5 @@ router.get('/count-all-order', authMiddleware, OrderController.countAllOrder)
 router.get('/get-filter-order', authMiddleware, OrderController.getFilterOrder)
 router.get('/get-order-month', authMiddleware, OrderController.getOrderMonth)
 router.get('/count-order-month', authMiddleware, OrderController.countOrderMonth)
+
 module.exports = router
