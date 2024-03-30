@@ -174,7 +174,7 @@ const getAllProduct = (limit, page, sort, filter) => {
                         pageCurrent: Number(page + 1),
                         totalPage: Math.ceil(totalProduct / limit)
                     })
-                } else if (filter[0] === 'price') {
+                } else if (filter[0] === 'price' || filter[0] === 'discount') {
                     if (Number(filter[1]) === Number(200000)) {
                         const label = filter[0]
                         //console.log('label', label)
@@ -187,7 +187,7 @@ const getAllProduct = (limit, page, sort, filter) => {
                             pageCurrent: Number(page + 1),
                             totalPage: Math.ceil(totalProduct / limit)
                         })
-                    } else if (Number(filter[1]) === Number(200001)) {
+                    } if (Number(filter[1]) === Number(200001)) {
                         const label = filter[0]
                         const allObjectFilter = await Product.find({ [label]: { '$gte': Number(filter[1]) } }).limit(limit).skip(page * limit)
                         resolve({
@@ -197,6 +197,15 @@ const getAllProduct = (limit, page, sort, filter) => {
                             total: totalProduct,
                             pageCurrent: Number(page + 1),
                             totalPage: Math.ceil(totalProduct / limit)
+                        })
+                    }
+                    else {
+                        const label = filter[0]
+                        const allObjectFilter = await Product.find({ [label]: { '$gte': Number(filter[1]) } }).limit(limit)
+                        resolve({
+                            status: 'OK',
+                            message: 'Success',
+                            data: allObjectFilter,
                         })
                     }
                 }
