@@ -11,5 +11,5 @@ router.get('/get-all', ProductController.getAllProduct)
 router.post('/delete-many', authMiddleware, ProductController.deleteMany)
 router.get('/get-all-type', ProductController.getAllType)
 router.get('/get-all-price', ProductController.getAllPrice)
-
+router.put('/evaluate/:id', ProductController.evaluate)//test
 module.exports = router

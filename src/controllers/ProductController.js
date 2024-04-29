@@ -2,6 +2,7 @@ const ProductService = require('../services/ProductService')
 
 
 const createProduct = async (req, res) => {
+    console.log('req.body', req.body.rating)
     try {
         const {
             name, image, type, price,
@@ -24,7 +25,7 @@ const createProduct = async (req, res) => {
             || !countColorBeL || !countColorWhiteL || !countColorBlackL || !countColorBlueL
             || !countColorBeXL || !countColorWhiteXL || !countColorBlackXL || !countColorBlueXL
             || !gender
-            || !countInStock || !rating || !discount) {
+            || !countInStock || !discount) {
             return res.status(200).json({
                 status: 'ERR',
                 message: 'The input is required'
@@ -155,7 +156,26 @@ const getAllPrice = async (req, res) => {
         })
     }
 }
+const evaluate = async (req, res) => {
+    try {
 
+        const productId = req.params.id
+        const data = req.body
+        if (!productId) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'The productId is required'
+            })
+        }
+
+        const response = await ProductService.evaluate(productId, data)
+        return res.status(200).json(response)
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
 
 
 module.exports = {
@@ -166,5 +186,6 @@ module.exports = {
     getAllProduct,
     deleteMany,
     getAllType,
-    getAllPrice
+    getAllPrice,
+    evaluate
 }

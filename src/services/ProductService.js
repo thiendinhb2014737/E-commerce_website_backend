@@ -304,6 +304,52 @@ const getAllPrice = () => {
         }
     })
 }
+const evaluate = (id, data) => {
+
+    return new Promise(async (resolve, reject) => {
+        console.log('data rating is...', data.rating)
+        try {
+            // Check email có tồn tại trong database không
+            const checkProduct = await Product.findOne({
+                _id: id
+            })
+            console.log('rating of Pro is...', checkProduct.rating)
+            if (checkProduct === null) {
+                resolve({
+                    status: 'OK',
+                    message: 'The product is not defined!',
+                })
+            }
+            if (checkProduct.rating === 0) {
+                const newRating = (data.rating + checkProduct.rating)
+
+                console.log('the new rating is...:', newRating)
+                const updatedProduct = await Product.findByIdAndUpdate(id, { rating: newRating }, { new: true })
+
+                resolve({
+                    status: 'OK',
+                    message: 'SUCCESS!',
+                    data: updatedProduct
+                })
+            } else {
+                const newRating = (data.rating + checkProduct.rating) / 2
+
+                console.log('the new rating is...', newRating)
+                const updatedProduct = await Product.findByIdAndUpdate(id, { rating: newRating }, { new: true })
+
+                resolve({
+                    status: 'OK',
+                    message: 'SUCCESS!',
+                    data: updatedProduct
+                })
+            }
+
+
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
 
 module.exports = {
     createProduct,
@@ -313,5 +359,6 @@ module.exports = {
     getAllProduct,
     deleteManyProduct,
     getAllType,
-    getAllPrice
+    getAllPrice,
+    evaluate
 }
