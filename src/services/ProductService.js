@@ -304,6 +304,8 @@ const getAllPrice = () => {
         }
     })
 }
+let TDG = 0
+let SLDG = 0
 const evaluate = (id, data) => {
 
     return new Promise(async (resolve, reject) => {
@@ -314,6 +316,7 @@ const evaluate = (id, data) => {
                 _id: id
             })
             console.log('rating of Pro is...', checkProduct.rating)
+            console.log('-------------------')
             if (checkProduct === null) {
                 resolve({
                     status: 'OK',
@@ -321,22 +324,28 @@ const evaluate = (id, data) => {
                 })
             }
             if (checkProduct.rating === 0) {
+
+                SLDG = SLDG + 1
                 const newRating = (data.rating + checkProduct.rating)
-
+                TDG = TDG + data.rating
                 console.log('the new rating is...:', newRating)
+                console.log('the new TDG is...', TDG)
+                console.log('the new SLDG is...', SLDG)
                 const updatedProduct = await Product.findByIdAndUpdate(id, { rating: newRating }, { new: true })
-
                 resolve({
                     status: 'OK',
                     message: 'SUCCESS!',
                     data: updatedProduct
                 })
             } else {
-                const newRating = (data.rating + checkProduct.rating) / 2
 
+                SLDG = SLDG + 1
+                const newRating = (data.rating + TDG) / SLDG
+                TDG = TDG + data.rating
                 console.log('the new rating is...', newRating)
+                console.log('the new TDG is...', TDG)
+                console.log('the new SLDG is...', SLDG)
                 const updatedProduct = await Product.findByIdAndUpdate(id, { rating: newRating }, { new: true })
-
                 resolve({
                     status: 'OK',
                     message: 'SUCCESS!',
